@@ -2,13 +2,14 @@
 
 ### 1. GECToR
 
-download pretrained models
+#### download pretrained models
 - BERT <a href="https://grammarly-nlp-data-public.s3.amazonaws.com/gector/bert_0_gectorv2.th">[link]</a>
 - RoBERTa <a href="https://grammarly-nlp-data-public.s3.amazonaws.com/gector/roberta_1_gectorv2.th">[link]</a>
 - XLNet <a href="https://grammarly-nlp-data-public.s3.amazonaws.com/gector/xlnet_0_gectorv2.th">[link]</a>
 
+#### prediction using pretrained models
 `
-cd predict
+cd gector/predict
 sh predict_bert.sh
 `
 
@@ -22,8 +23,48 @@ python predict.py --model_path ./model/bert_0_gectorv2.th \
 ```
 
 
-
 ### 2. Gramformer
+
+#### installation
+```shell
+pip3 install -U git+https://github.com/PrithivirajDamodaran/Gramformer.git
+```
+
+#### Corrector
+```python
+from gramformer import Gramformer
+import torch
+
+def set_seed(seed):
+  torch.manual_seed(seed)
+  if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(seed)
+
+set_seed(1212)
+
+gf = Gramformer(models = 1, use_gpu=False) # 1=corrector, 2=detector
+
+influent_sentences = [
+    "He are moving here.",
+    "I am doing fine. How is you?",
+    "How is they?",
+    "Matt like fish",
+    "the collection of letters was original used by the ancient Romans",
+    "We enjoys horror movies",
+    "Anna and Mike is going skiing",
+    "I walk to the store and I bought milk",
+    " We all eat the fish and then made dessert",
+    "I will eat fish for dinner and drink milk",
+    "what be the reason for everyone leave the company",
+]   
+
+for influent_sentence in influent_sentences:
+    corrected_sentences = gf.correct(influent_sentence, max_candidates=1)
+    print("[Input] ", influent_sentence)
+    for corrected_sentence in corrected_sentences:
+      print("[Correction] ",corrected_sentence)
+    print("-" *100)
+```
 
 ### 3. salesken - grammar_correction
 
@@ -63,7 +104,7 @@ print(corrected_sentences)
 ```
 
 ### reference
-- [GECToR – Grammatical Error Correction: Tag, Not Rewrite](https://aclanthology.org/2020.bea-1.16/)
-- [GECToR GitHub]https://github.com/grammarly/gector
-- https://github.com/PrithivirajDamodaran/Gramformer
-- https://huggingface.co/salesken/grammar_correction
+- [GECToR – Grammatical Error Correction: Tag, Not Rewrite Paper](https://aclanthology.org/2020.bea-1.16/)
+- [GECToR – Grammatical Error Correction: Tag, Not Rewrite GitHub](https://github.com/grammarly/gector)
+- [Gramformer GitHub](https://github.com/PrithivirajDamodaran/Gramformer)
+- [salesken Hugging Face](https://huggingface.co/salesken/grammar_correction)
