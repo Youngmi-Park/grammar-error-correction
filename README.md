@@ -1,9 +1,15 @@
 # grammar error correction test
 
-### 1. Gector
+### 1. GECToR
+
+download pretrained models
+- BERT <a href="https://grammarly-nlp-data-public.s3.amazonaws.com/gector/bert_0_gectorv2.th">[link]</a>
+- RoBERTa <a href="https://grammarly-nlp-data-public.s3.amazonaws.com/gector/roberta_1_gectorv2.th">[link]</a>
+- XLNet <a href="https://grammarly-nlp-data-public.s3.amazonaws.com/gector/xlnet_0_gectorv2.th">[link]</a>
 
 `
-./predict
+cd predict
+sh predict_bert.sh
 `
 
 ```shell
@@ -57,6 +63,7 @@ print(corrected_sentences)
 ```
 
 ### reference
-- https://github.com/grammarly/gector
+- [GECToR – Grammatical Error Correction: Tag, Not Rewrite](https://aclanthology.org/2020.bea-1.16/)
+- [GECToR GitHub]https://github.com/grammarly/gector
 - https://github.com/PrithivirajDamodaran/Gramformer
 - https://huggingface.co/salesken/grammar_correction
